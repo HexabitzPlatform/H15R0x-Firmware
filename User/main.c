@@ -85,17 +85,6 @@ int main(void)
 /* User Task */
 void UserTask(void * argument)
 {
-// writePxMutex(P1,A,1,10,100);
-//	Delay_ms(500);
-//	
-//	writePxMutex(P2,A,1,10,100);
-//	Delay_ms(500);
-//	
-//	writePxMutex(P3,A,1,10,100);
-//	Delay_ms(500);
-//	
-//	writePxMutex(P4,A,1,10,100);
-//	Delay_ms(500);
 	
   /* Infinite loop */
   for(;;)
