@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    H01R0_it.c
+  * @file    H15R0_it.c
   * @brief   Interrupt Service Routines.
   ******************************************************************************
   *
@@ -129,14 +129,9 @@ void USART3_8_IRQHandler(void)
 #if defined (_Usart3)
 	HAL_UART_IRQHandler(&huart3);
 #endif
-#if defined (_Usart4)
-	HAL_UART_IRQHandler(&huart4);
-#endif
+
 #if defined (_Usart5)
 	HAL_UART_IRQHandler(&huart5);
-#endif
-#if defined (_Usart6)
-	HAL_UART_IRQHandler(&huart6);
 #endif
 
 	/* If lHigherPriorityTaskWoken is now equal to pdTRUE, then a context
@@ -256,10 +251,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 /*-----------------------------------------------------------*/
 /* This function handles TIM3 global interrupt.
 */
-void TIM3_IRQHandler(void)
-{	
-		HAL_TIM_IRQHandler(&htim3);
-}
+//void TIM3_IRQHandler(void)
+//{	
+//		HAL_TIM_IRQHandler(&htim3);
+//}
 
 /*-----------------------------------------------------------*/
 

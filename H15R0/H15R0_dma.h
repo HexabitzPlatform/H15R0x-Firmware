@@ -2,13 +2,13 @@
     BitzOS (BOS) V0.2.1 - Copyright (C) 2017-2020 Hexabitz
     All rights reserved
 		
-    File Name     : H01R0_dma.h
+    File Name     : H15R0_dma.h
     Description   : Peripheral DMA setup header file.
 */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef H01R0_dma_H
-#define H01R0_dma_H
+#ifndef H15R0_dma_H
+#define H15R0_dma_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -47,7 +47,7 @@ extern void CRC_Init(void);
 }
 #endif
 
-#endif /* H01R0_dma_H */
+#endif /* H15R0_dma_H */
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

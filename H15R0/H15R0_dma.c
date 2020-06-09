@@ -2,7 +2,7 @@
     BitzOS (BOS) V0.2.1 - Copyright (C) 2017-2020 Hexabitz
     All rights reserved
 		
-    File Name     : H01R0_dma.c
+    File Name     : H15R0_dma.c
     Description   : Peripheral DMA setup source file.
 */
 
@@ -59,12 +59,6 @@ void DMA_Init(void)
 #endif
 #ifdef _P4		
 	DMA_MSG_RX_CH_Init(&msgRxDMA[3], DMA1_Channel6);
-#endif
-#ifdef _P5		
-	DMA_MSG_RX_CH_Init(&msgRxDMA[4], DMA2_Channel2);
-#endif
-#ifdef _P6		
-	DMA_MSG_RX_CH_Init(&msgRxDMA[5], DMA2_Channel3);
 #endif	
 
 	/* Initialize messaging TX DMAs x 3 */
@@ -177,15 +171,7 @@ void SetupMessagingRxDMAs(void)
 #ifdef _P4		
 	if (portStatus[P4] == FREE)
 		DMA_MSG_RX_Setup(P4uart, &msgRxDMA[3]);
-#endif
-#ifdef _P5		
-	if (portStatus[P5] == FREE)
-		DMA_MSG_RX_Setup(P5uart, &msgRxDMA[4]);
-#endif
-#ifdef _P6		
-	if (portStatus[P6] == FREE)
-		DMA_MSG_RX_Setup(P6uart, &msgRxDMA[5]);
-#endif					
+#endif				
 }
 
 /*-----------------------------------------------------------*/

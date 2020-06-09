@@ -12,7 +12,7 @@
 
 /* Includes ------------------------------------------------------------------*/
 
-#include "BOS_MsgCodes.h" 
+#include "BOS_MsgCodes.h"
 
 /* STM HAL */
 #include "stm32f0xx_hal.h" 
@@ -29,7 +29,7 @@ enum PortNames_e{PC, P1, P2, P3, P4, P5, P6, P7, P8, P9, P10, PUSB, P_RS485};
 enum ButtonNames_e{B1=1, B2, B3, B4, B5, B6, B7, B8, B9, B10};
 enum PortStatus_e{FREE, MSG, STREAM, CLI, PORTBUTTON, OVERRUN, CUSTOM};
 enum UartDirection_e{NORMAL, REVERSED};
-enum modulePartNumbers_e{_H01R0=1, _P01R0, _H23R0, _H23R1, _H07R3, _H08R6, _P08R6, _H09R0, _H1BR6, _H12R0, _H13R7, _H0FR1, _H0FR6, _H1AR2, _H0AR9, _H1DR1, _H1DR5, _H0BR4, _H18R0, _H26R0};
+enum modulePartNumbers_e{_H01R0=1, _P01R0, _H23R0, _H23R1, _H07R3, _H08R6, _P08R6, _H09R0, _H1BR6, _H12R0, _H13R7, _H0FR1, _H0FR6, _H1AR2, _H0AR9, _H1DR1, _H1DR5, _H0BR4, _H18R0, _H26R0, _H15R0};
 enum IndMode_e{IND_OFF, IND_PING, IND_TOPOLOGY, IND_SHORT_BLINK};
 enum DMAStreamDirection_e{FORWARD, BACKWARD, BIDIRECTIONAL};
 enum buttonType_e{NONE=0, MOMENTARY_NO, MOMENTARY_NC, ONOFF_NO, ONOFF_NC};		/* NO: Naturally Open, NC: Naturally CLosed */
@@ -309,49 +309,52 @@ snippet_t;
 	#include "H01R0.h"
 #endif
 #if defined(H23R1) || defined(H23R0)
-	#include "H23Rx.h"	
+	#include "H23Rx.h"
 #endif
 #ifdef H07R3
-	#include "H07R3.h"	
+	#include "H07R3.h"
 #endif
 #if defined(H08R6) || defined(P08R6)
-	#include "H08R6.h"	
+	#include "H08R6.h"
 #endif
 #ifdef H1BR6
-	#include "H1BR6.h"	
+	#include "H1BR6.h"
 #endif
 #ifdef H12R0
-	#include "H12R0.h"	
+	#include "H12R0.h"
 #endif
 #ifdef H13R7
 	#include "H13R7.h"
 #endif
 #if defined(H0FR1) || defined(H0FR6)
-	#include "H0FR6.h"		
+	#include "H0FR6.h"
 #endif
 #ifdef H1AR2
-	#include "H1AR0.h"	
+	#include "H1AR0.h"
 #endif
 #ifdef H09R0
-	#include "H09R0.h"	
+	#include "H09R0.h"
 #endif
 #ifdef H0AR9
-	#include "H0AR9.h"	
+	#include "H0AR9.h"
 #endif
 #ifdef H0BR4
-	#include "H0BR4.h"	
+	#include "H0BR4.h"
 #endif
 #ifdef H18R0
-	#include "H18R0.h"	
+	#include "H18R0.h"
 #endif
 #ifdef H1DR1
-	#include "H1DR1.h"	
+	#include "H1DR1.h"
 #endif
 #ifdef H1DR5
-	#include "H1DR5.h"	
+	#include "H1DR5.h"
 #endif
 #ifdef H26R0
-	#include "H26R0.h"	
+	#include "H26R0.h"
+#endif
+#ifdef H15R0
+	#include "H15R0.h"
 #endif
 
 /* More BOS header files - must be defined after module headers */

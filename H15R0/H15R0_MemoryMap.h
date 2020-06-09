@@ -2,13 +2,13 @@
     BitzOS (BOS) V0.2.1 - Copyright (C) 2017-2020 Hexabitz
     All rights reserved
 		
-    File Name     : H01R0_MemoryMap.h
+    File Name     : H15R0_MemoryMap.h
     Description   : Module MCU memory map header file.
 */
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef H01R0_MEMORYMAP_H
-#define H01R0_MEMORYMAP_H
+#ifndef H15R0_MEMORYMAP_H
+#define H15R0_MEMORYMAP_H
 
 #ifdef __cplusplus
  extern "C" {
@@ -34,7 +34,7 @@
 }
 #endif
 
-#endif /* H01R0_MEMORYMAP_H */
+#endif /* H15R0_MEMORYMAP_H */
 
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
