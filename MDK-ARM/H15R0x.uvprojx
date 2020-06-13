@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F091xB,H15R0,_module=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\BOS;..\Thirdparty\Middleware\FreeRTOS\Source\CMSIS_RTOS;..\Thirdparty\Middleware\FreeRTOS\Source\include;..\Thirdparty\Middleware\FreeRTOS\Source\portable\RVDS\ARM_CM0;..\Thirdparty\STM32F0xx_HAL_Driver\Inc\Legacy;..\Thirdparty\STM32F0xx_HAL_Driver\Inc;..\Thirdparty\CMSIS\Device\ST\STM32F0xx\Include;..\Thirdparty\CMSIS\Include;..\H15R0</IncludePath>
+              <IncludePath>..\User;..\BOS;..\H15R0;..\Thirdparty\Middleware\FreeRTOS\Source\CMSIS_RTOS;..\Thirdparty\Middleware\FreeRTOS\Source\include;..\Thirdparty\Middleware\FreeRTOS\Source\portable\RVDS\ARM_CM0;..\Thirdparty\STM32F0xx_HAL_Driver\Inc\Legacy;..\Thirdparty\STM32F0xx_HAL_Driver\Inc;..\Thirdparty\CMSIS\Device\ST\STM32F0xx\Include;..\Thirdparty\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -492,6 +492,16 @@
               <FileType>1</FileType>
               <FilePath>..\thirdparty\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_crc_ex.c</FilePath>
             </File>
+            <File>
+              <FileName>stm32f0xx_hal_dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Thirdparty\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_dac.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f0xx_hal_dac_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Thirdparty\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_dac_ex.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -556,6 +566,11 @@
               <FileName>startup_stm32f091xc.s</FileName>
               <FileType>2</FileType>
               <FilePath>..\H15R0\startup_stm32f091xc.s</FilePath>
+            </File>
+            <File>
+              <FileName>H15R0_dac.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\H15R0\H15R0_dac.c</FilePath>
             </File>
           </Files>
         </Group>

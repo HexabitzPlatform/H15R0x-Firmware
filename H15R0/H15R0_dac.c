@@ -1,11 +1,11 @@
 /**
   ******************************************************************************
-  * File Name          : H15R0_gpio.c
+  * File Name          : H15R0_dac.c
   * Description        : This file provides code for the configuration
-  *                      of all used GPIO pins.
+  *                      of the DAC instances.
   ******************************************************************************
   *
-  * COPYRIGHT(c) 2015 STMicroelectronics
+  * COPYRIGHT(c) 2016 STMicroelectronics
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -33,42 +33,43 @@
   */
 
 /*
-		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.1 - Copyright (C) 20167 Hexabitz
+		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.0 - Copyright (C) 2017-2019 Hexabitz
     All rights reserved
 */
+
 
 /* Includes ------------------------------------------------------------------*/
 #include "BOS.h"
 
-/*----------------------------------------------------------------------------*/
-/* Configure GPIO                                                             */
-/*----------------------------------------------------------------------------*/
-
-/** Pinout Configuration
-*/
-void GPIO_Init(void)
+DAC_HandleTypeDef hdac;
+DMA_HandleTypeDef hdma_dac_ch1;
+/* DAC init function */
+void MX_DAC_Init(void)
 {
-  /* GPIO Ports Clock Enable */
-  __GPIOC_CLK_ENABLE();
-  __GPIOA_CLK_ENABLE();
-  __GPIOD_CLK_ENABLE();
-	__GPIOB_CLK_ENABLE();
-	__GPIOF_CLK_ENABLE();		// for HSE and Boot0
-	
-	IND_LED_Init();
+  DAC_ChannelConfTypeDef sConfig;
+  __DAC1_CLK_ENABLE();	
+
+  /* DAC Initialization */
+  hdac.Instance = DAC;
+  HAL_DAC_Init(&hdac);
+
+  /* DAC channel OUT1 config */
+  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
+	sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_DISABLE;
+  HAL_DAC_ConfigChannel(&hdac, &sConfig, DAC_CHANNEL_1);
 }
 
-
-//-- Configure indicator LED
-void IND_LED_Init(void)
+/** Enable DMA controller clock */
+void MX_DMA_Init(void) 
 {
-	GPIO_InitTypeDef GPIO_InitStruct;
-	
-	GPIO_InitStruct.Pin = _IND_LED_PIN;
-	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-	GPIO_InitStruct.Pull = GPIO_NOPULL;
-	GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-	HAL_GPIO_Init(_IND_LED_PORT, &GPIO_InitStruct);
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Ch2_3_DMA2_Ch1_2_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Ch2_3_DMA2_Ch1_2_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Ch2_3_DMA2_Ch1_2_IRQn);
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

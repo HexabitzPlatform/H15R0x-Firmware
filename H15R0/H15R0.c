@@ -106,14 +106,13 @@ module_param_t modParam[NUM_MODULE_PARAMS] = {{.paramPtr=NULL, .paramFormat=FMT_
 void Module_Init(void)
 {
 	/* Peripheral clock enable */
-	_DAC_out_GPIO_CLK();
 	
 	/* Array ports */
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_USART5_UART_Init();
-	
+	MX_DAC_Init();
 	/* LED PWM Timer */
 
 	
@@ -261,7 +260,7 @@ Module_Status Module_MessagingTask(uint16_t code, uint8_t port, uint8_t src, uin
 //			break;
 //	}			
 
-	return 0;	
+return 0;	
 }
 /*-----------------------------------------------------------*/
 

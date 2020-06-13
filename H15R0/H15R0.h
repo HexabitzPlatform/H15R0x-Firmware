@@ -14,10 +14,10 @@
 /* Includes ------------------------------------------------------------------*/
 #include "BOS.h"
 #include "H15R0_MemoryMap.h"	
-#include "H15R0_uart.h"	
+#include "H15R0_uart.h"
 #include "H15R0_gpio.h"	
-#include "H15R0_dma.h"		
-	
+#include "H15R0_dma.h"
+#include "H15R0_dac.h"
 /* Exported definitions -------------------------------------------------------*/
 
 #ifdef H15R0
@@ -81,7 +81,7 @@
 
 #define _DAC_out_PORT						GPIOA
 #define _DAC_out_PIN						GPIO_PIN_4
-#define _DAC_out_GPIO_CLK()	  	__GPIOA_CLK_ENABLE();
+
 
 #define NUM_MODULE_PARAMS		1
 

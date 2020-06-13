@@ -41,7 +41,9 @@
 
 
 /* Private variables ---------------------------------------------------------*/
-char A[1]={1};
+float AnalogOutputVal;
+uint32_t ByteVal;
+
 /* Private function prototypes -----------------------------------------------*/
 
 /* Main functions ------------------------------------------------------------*/
@@ -75,8 +77,6 @@ int main(void)
   while (1)
   {
 
-
-
   }
 }
 
@@ -85,11 +85,17 @@ int main(void)
 /* User Task */
 void UserTask(void * argument)
 {
+	HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
+	
+	ByteVal = (3.1 * 256)/3.3;
+	AnalogOutputVal = 3.3 * ByteVal /256;
+	
+	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
 	
   /* Infinite loop */
   for(;;)
   {
-		
+				
 		
 	}
 }
