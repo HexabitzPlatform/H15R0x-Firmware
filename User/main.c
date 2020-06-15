@@ -41,9 +41,8 @@
 
 
 /* Private variables ---------------------------------------------------------*/
-float AnalogOutputVal;
-uint32_t ByteVal;
-
+uint8_t bytva;
+float DACO;
 /* Private function prototypes -----------------------------------------------*/
 
 /* Main functions ------------------------------------------------------------*/
@@ -85,18 +84,18 @@ int main(void)
 /* User Task */
 void UserTask(void * argument)
 {
-	HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
-	
-	ByteVal = (3.1 * 256)/3.3;
-	AnalogOutputVal = 3.3 * ByteVal /256;
-	
-	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
-	
+//	HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
+//	
+//	bytva = (3.1 * 256)/3.1;
+//	DACO = 3.1 * bytva /256;
+//	
+//	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, (uint32_t)bytva);
+//	
   /* Infinite loop */
   for(;;)
   {
-				
-		
+//		AnalogOutValue(-8);
+      AnalogPercentage(10);		
 	}
 }
 

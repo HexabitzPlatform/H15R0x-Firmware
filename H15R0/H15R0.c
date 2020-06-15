@@ -10,6 +10,8 @@
 		
 			>> USARTs 1,2,3,4 for module ports.
 			>> GPIOA 4  for Analog Output Module.
+			>> for DAC out   0  --->> OP-AM  is -10  volt.
+			>> for DAC out  3.1 --->> OP-AM  is +8.5 volt.
 			
 */
 	
@@ -27,9 +29,13 @@ UART_HandleTypeDef huart5;
 module_param_t modParam[NUM_MODULE_PARAMS] = {{.paramPtr=NULL, .paramFormat=FMT_FLOAT, .paramName=""}};
 
 /* Private variables ---------------------------------------------------------*/
-
-
-
+float Vref = 3.3;                          // Vref of op-am
+float MaxVoltage = 8.6;                    // maximum out of op-am
+float MinVoltage = -9.9;                   // minimum out of op-am
+float MaxDACout = 3.1;
+float DACOut;
+int DAC_MaxDigitalValue = 256;         //For right-aligned 8-bit resolution: DAC_MaxDigitalValue = 0xFF
+uint8_t ByteVal;
 
 /* Private function prototypes -----------------------------------------------*/	
 
@@ -101,7 +107,7 @@ module_param_t modParam[NUM_MODULE_PARAMS] = {{.paramPtr=NULL, .paramFormat=FMT_
 */
 
 
-/* --- H15R0 module initialization. 
+/* --- H15R0 module initialization.
 */
 void Module_Init(void)
 {
@@ -112,9 +118,9 @@ void Module_Init(void)
   MX_USART2_UART_Init();
   MX_USART3_UART_Init();
   MX_USART5_UART_Init();
-	MX_DAC_Init();
-	/* LED PWM Timer */
-
+	
+	/* DAC output */
+  MX_DAC_Init();
 	
 	/* Create the RGB LED task */
 }
@@ -275,25 +281,6 @@ void RGBledTask(void * argument)
 	}	
 
 }
-
-/*-----------------------------------------------------------*/
-
-/* TIM3 init function - Front-end RED LED PWM Timer 16-bit 
-*/
-
-
-
-/*-----------------------------------------------------------*/
-/* --- Load and start red LED PWM ---
-			Inputs:
-					red Duty cycle of red LED (0-255).
-					green Duty cycle of green LED (0-255).
-					blue Duty cycle of blue LED (0-255).
-					intensity RGB LED intensity (0-100).
-*/
-
-
-
 /*-----------------------------------------------------------*/
 
 /* --- Pulse the RGB LED --- 
@@ -326,21 +313,32 @@ void RGBledTask(void * argument)
    ----------------------------------------------------------------------- 
 */
 
-/* --- Turn on RGB LED (white color) --- 
+/* --- Analog output percentage ---
 */
-
-
+Module_Status AnalogPercentage(float outputVoltage)
+{
+	DACOut = outputVoltage * MaxDACout / 100;
+	ByteVal = (DACOut * DAC_MaxDigitalValue)/Vref;
+	
+  HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
+ 	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
+}
 
 /*-----------------------------------------------------------*/
 
-/* --- Turn off RGB LED --- 
+/* --- Analog output value ---
 */
+Module_Status AnalogOutValue(float outputVoltage)
+{
+	DACOut = ( outputVoltage - MinVoltage) * MaxDACout / ( MaxVoltage - MinVoltage);
+	ByteVal = (DACOut * DAC_MaxDigitalValue)/Vref;
+  HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
+ 	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
 
-
-
+}
 /*-----------------------------------------------------------*/
 
-/* --- Toggle RGB LED --- 
+/* --- Toggle RGB LED ---
 */
 
 
@@ -356,26 +354,6 @@ void RGBledTask(void * argument)
 
 /* --- Set LED color from a predefined color list (continuously) 
 				using PWM intensity modulation. 
-*/
-
-
-
-/*-----------------------------------------------------------*/
-
-/* --- Activate the RGB LED pulse command with RGB values. Set repeat to -1 for periodic signals --- 
-*/
-
-
-
-/*-----------------------------------------------------------*/
-
-/* --- Activate the RGB LED pulse command with a specific color. Set repeat to -1 for periodic signals --- 
-*/
-
-
-/*-----------------------------------------------------------*/
-
-/* --- Activate the RGB LED sweep mode. Set repeat to -1 for periodic signals. Minimum period for fine sweep is 6 x 256 = 1536 ms --- 
 */
 
 

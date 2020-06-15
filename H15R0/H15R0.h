@@ -132,7 +132,8 @@ extern void MX_USART5_UART_Init(void);
 	|																APIs	 																 	|
    ----------------------------------------------------------------------- 
 */
-
+extern Module_Status AnalogPercentage(float outputVoltage);
+extern Module_Status AnalogOutValue(float outputVoltage);
 
 
 /* -----------------------------------------------------------------------
