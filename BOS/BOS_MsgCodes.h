@@ -162,6 +162,9 @@
 #define CODE_H26R0_SAMPLE_RAW               1912
 #define CODE_H26R0_STREAM_FORMAT            1913
 
+// H15R0x
+#define	CODE_H15R0_AnalogPercentage				  1950
+#define	CODE_H15R0_AnalogOutValue					  1951
 
 #endif /* BOS_MSGCODES_H */
 

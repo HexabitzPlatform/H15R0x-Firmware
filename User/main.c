@@ -41,8 +41,7 @@
 
 
 /* Private variables ---------------------------------------------------------*/
-uint8_t bytva;
-float DACO;
+
 /* Private function prototypes -----------------------------------------------*/
 
 /* Main functions ------------------------------------------------------------*/
@@ -84,21 +83,21 @@ int main(void)
 /* User Task */
 void UserTask(void * argument)
 {
-//	HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
-//	
-//	bytva = (3.1 * 256)/3.1;
-//	DACO = 3.1 * bytva /256;
-//	
-//	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, (uint32_t)bytva);
-//	
+	AddPortButton(MOMENTARY_NO , P1);
+	SetButtonEvents(P1 , 1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0);
+
   /* Infinite loop */
   for(;;)
   {
-//		AnalogOutValue(-8);
-      AnalogPercentage(10);		
+
+	 
 	}
 }
-
+void buttonClickedCallback(uint8_t port)
+{
+	  messageParams[0]=1;
+		SendMessageToModule(2 , CODE_H15R0_AnalogOutValue, 1);
+}
 /*-----------------------------------------------------------*/
 
 /************************ (C) COPYRIGHT HEXABITZ *****END OF FILE****/

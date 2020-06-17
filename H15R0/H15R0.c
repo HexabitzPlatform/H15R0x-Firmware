@@ -31,7 +31,7 @@ module_param_t modParam[NUM_MODULE_PARAMS] = {{.paramPtr=NULL, .paramFormat=FMT_
 /* Private variables ---------------------------------------------------------*/
 float Vref = 3.3;                          // Vref of op-am
 float MaxVoltage = 8.6;                    // maximum out of op-am
-float MinVoltage = -9.9;                   // minimum out of op-am
+float MinVoltage = -10;                   // minimum out of op-am
 float MaxDACout = 3.1;
 float DACOut;
 int DAC_MaxDigitalValue = 256;         //For right-aligned 8-bit resolution: DAC_MaxDigitalValue = 0xFF
@@ -48,21 +48,7 @@ uint8_t ByteVal;
 //portBASE_TYPE onCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
 //portBASE_TYPE offCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
 //portBASE_TYPE colorCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
-//portBASE_TYPE RGBCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
-//portBASE_TYPE toggleCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
-//portBASE_TYPE pulseColorCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
-//portBASE_TYPE pulseRGBCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
-//portBASE_TYPE sweepCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
-//portBASE_TYPE dimCommand( int8_t *pcWriteBuffer, size_t xWriteBufferLen, const int8_t *pcCommandString );
 
-/* CLI command structure : demo */
-
-
-/*-----------------------------------------------------------*/
-/* CLI command structure : on */
-
-
-/*-----------------------------------------------------------*/
 /* CLI command structure : off */
 
 
@@ -81,22 +67,6 @@ uint8_t ByteVal;
 //};
 /*-----------------------------------------------------------*/
 /* CLI command structure : toggle */
-
-
-/*-----------------------------------------------------------*/
-/* CLI command structure : pulseColor */
-
-
-/*-----------------------------------------------------------*/
-/* CLI command structure : pulseRGB */
-
-
-/*-----------------------------------------------------------*/
-/* CLI command structure : sweep */
-
-
-/*-----------------------------------------------------------*/
-/* CLI command structure : dim */
 
 
 /*-----------------------------------------------------------*/
@@ -121,20 +91,10 @@ void Module_Init(void)
 	
 	/* DAC output */
   MX_DAC_Init();
-	
-	/* Create the RGB LED task */
 }
-
 /*-----------------------------------------------------------*/
 
-/* --- H15R0 message processing task. 
-*/
-
-
-
-/*-----------------------------------------------------------*/
-
-/* --- Register this module CLI Commands 
+/* --- Register this module CLI Commands
 */
 void RegisterModuleCLICommands(void)
 {
@@ -142,22 +102,15 @@ void RegisterModuleCLICommands(void)
 //	FreeRTOS_CLIRegisterCommand( &onCommandDefinition );
 //	FreeRTOS_CLIRegisterCommand( &offCommandDefinition );
 //	FreeRTOS_CLIRegisterCommand( &colorCommandDefinition );
-//	FreeRTOS_CLIRegisterCommand( &RGBCommandDefinition );
-//	FreeRTOS_CLIRegisterCommand( &toggleCommandDefinition );
-//	FreeRTOS_CLIRegisterCommand( &pulseColorCommandDefinition );
-//	FreeRTOS_CLIRegisterCommand( &pulseRGBCommandDefinition );
-//	FreeRTOS_CLIRegisterCommand( &sweepCommandDefinition );
-//	FreeRTOS_CLIRegisterCommand( &dimCommandDefinition );
 }
-
 /*-----------------------------------------------------------*/
 
-/* --- Get the port for a given UART. 
+/* --- Get the port for a given UART.
 */
 uint8_t GetPort(UART_HandleTypeDef *huart)
 {
 #ifdef H15R0
-	if (huart->Instance == USART5)
+	     if (huart->Instance == USART5)
 		return P1;
 	else if (huart->Instance == USART2)
 		return P2;
@@ -166,107 +119,32 @@ uint8_t GetPort(UART_HandleTypeDef *huart)
 	else if (huart->Instance == USART1)
 		return P4;
 #endif
-	
+
 	return 0;
 }
+/*-----------------------------------------------------------*/
+/* --- H15R0 message processing task. 
+*/
 Module_Status Module_MessagingTask(uint16_t code, uint8_t port, uint8_t src, uint8_t dst, uint8_t shift)
 {
-//	Module_Status result = H26R0_OK;
-//  uint32_t period = 0;
-//  uint32_t timeout = 0;
-//	
-//	switch (code)
-//	{
-//		case (CODE_H26R0_SET_RATE):
-//			SetHX711Rate(cMessage[port-1][shift]);
-//			break;
-//		
-//		case (CODE_H26R0_STREAM_PORT_GRAM):
-//			period = ( (uint32_t) cMessage[port-1][1+shift] << 24 ) + ( (uint32_t) cMessage[port-1][2+shift] << 16 ) + ( (uint32_t) cMessage[port-1][3+shift] << 8 ) + cMessage[port-1][4+shift];
-//			timeout = ( (uint32_t) cMessage[port-1][5+shift] << 24 ) + ( (uint32_t) cMessage[port-1][6+shift] << 16 ) + ( (uint32_t) cMessage[port-1][7+shift] << 8 ) + cMessage[port-1][8+shift];
-//			StreamGramToPort(cMessage[port-1][shift], cMessage[port-1][9+shift], cMessage[port-1][10+shift], period, timeout);
-//			break;
-//		
-//		case (CODE_H26R0_STREAM_PORT_KGRAM):
-//			period = ( (uint32_t) cMessage[port-1][1+shift] << 24 ) + ( (uint32_t) cMessage[port-1][2+shift] << 16 ) + ( (uint32_t) cMessage[port-1][3+shift] << 8 ) + cMessage[port-1][4+shift];
-//			timeout = ( (uint32_t) cMessage[port-1][5+shift] << 24 ) + ( (uint32_t) cMessage[port-1][6+shift] << 16 ) + ( (uint32_t) cMessage[port-1][7+shift] << 8 ) + cMessage[port-1][8+shift];
-//			StreamKGramToPort(cMessage[port-1][shift], cMessage[port-1][9+shift], cMessage[port-1][10+shift], period, timeout);
-//			break;
-//		
-//    case (CODE_H26R0_STREAM_PORT_OUNCE):
-//			period = ( (uint32_t) cMessage[port-1][1+shift] << 24 ) + ( (uint32_t) cMessage[port-1][2+shift] << 16 ) + ( (uint32_t) cMessage[port-1][3+shift] << 8 ) + cMessage[port-1][4+shift];
-//			timeout = ( (uint32_t) cMessage[port-1][5+shift] << 24 ) + ( (uint32_t) cMessage[port-1][6+shift] << 16 ) + ( (uint32_t) cMessage[port-1][7+shift] << 8 ) + cMessage[port-1][8+shift];
-//			StreamOunceToPort(cMessage[port-1][shift], cMessage[port-1][9+shift], cMessage[port-1][10+shift], period, timeout);
-//			break;
-//		
-//		case (CODE_H26R0_STREAM_PORT_POUND):
-//			period = ( (uint32_t) cMessage[port-1][1+shift] << 24 ) + ( (uint32_t) cMessage[port-1][2+shift] << 16 ) + ( (uint32_t) cMessage[port-1][3+shift] << 8 ) + cMessage[port-1][4+shift];
-//			timeout = ( (uint32_t) cMessage[port-1][5+shift] << 24 ) + ( (uint32_t) cMessage[port-1][6+shift] << 16 ) + ( (uint32_t) cMessage[port-1][7+shift] << 8 ) + cMessage[port-1][8+shift];
-//			StreamPoundToPort(cMessage[port-1][shift], cMessage[port-1][9+shift], cMessage[port-1][10+shift], period, timeout);
-//			break;
-//		
-//		case (CODE_H26R0_STOP):
-//			global_mode=IDLE_CASE;
-//			PowerDown();
-//			xTimerStop( xTimer, portMAX_DELAY );
-//			break;
-//		
-//		case (CODE_H26R0_SAMPLE_GRAM):
-//			if (cMessage[port-1][shift] == 1)
-//				H26R0_Weight1=SampleGram(cMessage[port-1][shift]);
-//			else
-//				H26R0_Weight2=SampleGram(cMessage[port-1][shift]);
-//			break;
-//			
-//		case (CODE_H26R0_SAMPLE_KGRAM):
-//			if (cMessage[port-1][shift] == 1)
-//				H26R0_Weight1=SampleKGram(cMessage[port-1][shift]);
-//			else
-//				H26R0_Weight2=SampleKGram(cMessage[port-1][shift]);	
-//			break;
-//			
-//		case (CODE_H26R0_SAMPLE_OUNCE):
-//			if (cMessage[port-1][shift] == 1)
-//				H26R0_Weight1=SampleOunce(cMessage[port-1][shift]);
-//			else
-//				H26R0_Weight2=SampleOunce(cMessage[port-1][shift]);	
-//			break;
-//			
-//		case (CODE_H26R0_SAMPLE_POUND):
-//			if (cMessage[port-1][shift] == 1)
-//				H26R0_Weight1=SamplePound(cMessage[port-1][shift]);
-//			else
-//				H26R0_Weight2=SamplePound(cMessage[port-1][shift]);
-//			break;
-//			
-//		case (CODE_H26R0_ZEROCAL):
-//				ZeroCal(cMessage[port-1][shift]);
-//			break;
-//			
-//		case (CODE_H26R0_STREAM_RAW):
-//			period = ( (uint32_t) cMessage[port-1][1+shift] << 24 ) + ( (uint32_t) cMessage[port-1][2+shift] << 16 ) + ( (uint32_t) cMessage[port-1][3+shift] << 8 ) + cMessage[port-1][4+shift];
-//			timeout = ( (uint32_t) cMessage[port-1][5+shift] << 24 ) + ( (uint32_t) cMessage[port-1][6+shift] << 16 ) + ( (uint32_t) cMessage[port-1][7+shift] << 8 ) + cMessage[port-1][8+shift];
-//			StreamRawToPort(cMessage[port-1][shift], cMessage[port-1][9+shift], cMessage[port-1][10+shift], period, timeout);
-//			H26R0_Weight2=Average(cMessage[port-1][shift],1);	
-//			break;
-//			
-//		case (CODE_H26R0_SAMPLE_RAW):
-//			H26R0_Weight2=Average(cMessage[port-1][shift],1);	
-//			break;
-//		
-//		case (CODE_H26R0_STREAM_FORMAT):
-//			if (cMessage[port-1][shift] == 0)
-//				H26R0_DATA_FORMAT = FMT_UINT32;
-//			else
-//				H26R0_DATA_FORMAT = FMT_FLOAT;
-//			break;
-//			
-//		default:
-//			result = H26R0_ERR_UnknownMessage;
-//			break;
-//	}			
+	Module_Status result = H15R0_OK;
+	
+	switch (code)
+	{
+		case CODE_H15R0_AnalogPercentage :
+			AnalogPercentage(cMessage[port-1][shift]);
+			break;
+		
+		case CODE_H15R0_AnalogOutValue :
+				AnalogOutValue(cMessage[port-1][shift]);
+			break;
 
-return 0;	
+		default:
+			result = H15R0_ERR_UnknownMessage;
+			break;
+	}
+
+	return result;
 }
 /*-----------------------------------------------------------*/
 
@@ -285,25 +163,6 @@ void RGBledTask(void * argument)
 
 /* --- Pulse the RGB LED --- 
 */
-
-
-/*-----------------------------------------------------------*/
-
-/* --- RGB LED basic color sweep --- 
-*/
-
-
-/*-----------------------------------------------------------*/
-
-/* --- RGB LED fine color sweep --- 
-*/
-
-
-/*-----------------------------------------------------------*/
-
-/* --- Dim the RGB LED --- 
-*/
-
 
 
 /*-----------------------------------------------------------*/
@@ -338,36 +197,12 @@ Module_Status AnalogOutValue(float outputVoltage)
 }
 /*-----------------------------------------------------------*/
 
-/* --- Toggle RGB LED ---
+/* --- 
 */
 
 
 
 /*-----------------------------------------------------------*/
-
-/* --- Set RGB colors on LED (continuously) using PWM intensity modulation. 
-*/
-
-
-
-/*-----------------------------------------------------------*/
-
-/* --- Set LED color from a predefined color list (continuously) 
-				using PWM intensity modulation. 
-*/
-
-
-
-/*-----------------------------------------------------------*/
-
-/* --- Activate RGB LED dim mode using one of the basic colors. Set repeat to -1 for periodic signals --- 
-*/
-
-
-	
-
-/*-----------------------------------------------------------*/
-
 
 /* -----------------------------------------------------------------------
 	|															Commands																 	|
@@ -393,25 +228,6 @@ Module_Status AnalogOutValue(float outputVoltage)
 
 /*-----------------------------------------------------------*/
 
-
-
-
-/*-----------------------------------------------------------*/
-
-
-
-/*-----------------------------------------------------------*/
-
-
-
-/*-----------------------------------------------------------*/
-
-
-
-/*-----------------------------------------------------------*/
-
-
-/*-----------------------------------------------------------*/
 
 
 
