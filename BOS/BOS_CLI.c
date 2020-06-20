@@ -348,7 +348,7 @@ void CLI_CommandParser(uint8_t port, bool enableOutput, int8_t *cInputString, in
 						sprintf( ( char * ) pcOutputString, "Command forwarded to Module %d\n\r", id);
 
 						if ((strlen((char*)pcOutputString) > 0) && enableOutput)
-							writePxMutex(port, (char*)pcOutputString, strlen((char*)pcOutputString), cmd50ms, 1);		
+							writePxMutex(port, (char*)pcOutputString, strlen((char*)pcOutputString), cmd50ms, 1);
 						memset( pcOutputString, 0x00, strlen((char*)pcOutputString) );
 					}
 					

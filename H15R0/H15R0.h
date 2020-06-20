@@ -101,7 +101,6 @@ typedef enum
 {
   H15R0_OK = 0,
 	H15R0_ERR_UnknownMessage,
-	H15R0_ERR_Timeout,
 	H15R0_ERR_WrongParams,
 	H15R0_ERROR = 255
 }
@@ -140,8 +139,8 @@ extern Module_Status AnalogOutValue(float outputVoltage);
 	|															Commands																 	|
    ----------------------------------------------------------------------- 
 */
-
-
+extern const CLI_Command_Definition_t percentagevalueCommandDefinition;
+extern const CLI_Command_Definition_t AnalogvalueCommandDefinition;
 
 #endif /* H15R0_H */
 

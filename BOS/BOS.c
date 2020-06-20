@@ -3420,7 +3420,7 @@ UART_HandleTypeDef* GetUart(uint8_t port)
 	{
 	#ifdef _P1
 		case P1 : 
-			return P1uart;	
+			return P1uart;
 	#endif
 	#ifdef _P2
 		case P2 :
@@ -3460,7 +3460,7 @@ UART_HandleTypeDef* GetUart(uint8_t port)
 	#endif
 		default:
 			return 0;
-	}		
+	}
 }
 
 /*-----------------------------------------------------------*/
