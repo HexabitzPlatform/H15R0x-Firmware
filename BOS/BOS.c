@@ -26,7 +26,7 @@ TIM_HandleTypeDef htim15;	/* milli-second delay counter */
 uint8_t indMode = IND_OFF;
 
 /* Define module PN strings [available PNs+1][5 chars] */
-const char modulePNstring[NUM_OF_MODULE_PN][6] = {"H01R0", "P01R0", "H23R0", "H23R1", "H07R3", "H08R6", "P08R6", "H09R0", "H1BR6", "H12R0", "H13R7", "H0FR1", "H0FR6", "H1AR2", "H0AR9", "H1DR1", "H1DR5", "H0BR4", "H18R0", "H26R0" , "H15R0"};
+const char modulePNstring[NUM_OF_MODULE_PN][6] = {"", "H01R0", "P01R0", "H23R0", "H23R1", "H07R3", "H08R6", "P08R6", "H09R0", "H1BR6", "H12R0", "H13R7", "H0FR1", "H0FR6", "H1AR2", "H0AR9", "H1DR1", "H1DR5", "H0BR4", "H18R0", "H26R0" , "H15R0"};
 
 /* Define BOS keywords */
 static const char BOSkeywords[NumOfKeywords][4] = {"me", "all", "if", "for"};
@@ -546,7 +546,7 @@ void PxMessagingTask(void * argument)
 		ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
 		
 		if (messageLength[port-1])
-		{						
+		{
 			/* Long message? Read Options Byte MSB */
 			if (cMessage[port-1][2]>>7) {
 				longMessage = 1;
@@ -555,18 +555,18 @@ void PxMessagingTask(void * argument)
 			}
 			
 			/* Read message source and destination */
-			dst = cMessage[port-1][0]; 
-			src = cMessage[port-1][1];	
+			dst = cMessage[port-1][0];
+			src = cMessage[port-1][1];
 			
 			/* Reset array index shift */
 			shift = 0;
 			
 			/* Read message options */
 			if (cMessage[port-1][2] & 0x01) {						// 1st bit (LSB) Extended options - TODO handle extended options case
-				extendOptions = true;	
+				extendOptions = true;
 				(void) extendOptions;		// remove warning		
-				++shift;				
-			} 
+				++shift;
+			}
 			extendCode = (cMessage[port-1][2]>>1)&0x01;									// 2nd bit Extended code
 			BOS.trace = (traceOptions_t)((cMessage[port-1][2]>>2)&0x03);	// 3rd-4th bits Trace 
 																																	// 5th bit Reserved
@@ -574,7 +574,7 @@ void PxMessagingTask(void * argument)
 																																	// 8th bit (MSB) Long message
 			
 			/* Read message code - LSB first */
-			if (extendCode == true) {		
+			if (extendCode == true) {
 				code = ( ( (uint16_t) cMessage[port-1][4+shift] << 8 ) + cMessage[port-1][3+shift] );	
 				++shift;
 			} else {
@@ -1104,14 +1104,14 @@ void PxMessagingTask(void * argument)
 										remoteBuffer = ((uint32_t)cMessage[port-1][shift]<<0) + ((uint32_t)cMessage[port-1][1+shift]<<8) + ((uint32_t)cMessage[port-1][2+shift]<<16) + ((uint32_t)cMessage[port-1][3+shift]<<24); break;
 									default:
 										break;
-								}															
+								}
 							}
 							else
 							{
 							}
 							// Remote read status
 							if (responseStatus != BOS_ERR_REMOTE_READ_NO_VAR)	responseStatus = BOS_OK;
-							break;	
+							break;
 
 							
 						case CODE_WRITE_REMOTE :
@@ -1142,7 +1142,7 @@ void PxMessagingTask(void * argument)
 											break;
 											
 										case FMT_INT8: 
-											if ((BOS_var_reg[cMessage[port-1][shift]-1]&0x000F) == 0) {		// Variable does not exist																															
+											if ((BOS_var_reg[cMessage[port-1][shift]-1]&0x000F) == 0) {		// Variable does not exist
 												temp32 = (uint32_t)malloc(sizeof(int8_t));							// Create a new one
 												if (temp32 != 0) {
 													BOS_var_reg[cMessage[port-1][shift]-1] = ((temp32-SRAM_BASE)<<16) + cMessage[port-1][1+shift];
@@ -1151,11 +1151,11 @@ void PxMessagingTask(void * argument)
 												}
 											}
 											if (responseStatus != BOS_ERR_REMOTE_WRITE_MEM_FULL)			// Write remote value
-												*(__IO int8_t *)temp32 = (int8_t)cMessage[port-1][2+shift];		
+												*(__IO int8_t *)temp32 = (int8_t)cMessage[port-1][2+shift];
 											break;
 											
 										case FMT_UINT16: 
-											if ((BOS_var_reg[cMessage[port-1][shift]-1]&0x000F) == 0) {		// Variable does not exist																															
+											if ((BOS_var_reg[cMessage[port-1][shift]-1]&0x000F) == 0) {		// Variable does not exist																			
 												temp32 = (uint32_t)malloc(sizeof(uint16_t));						// Create a new one
 												if (temp32 != 0) {
 													BOS_var_reg[cMessage[port-1][shift]-1] = ((temp32-SRAM_BASE)<<16) + cMessage[port-1][1+shift];
@@ -1217,24 +1217,24 @@ void PxMessagingTask(void * argument)
 											}
 											if (responseStatus != BOS_ERR_REMOTE_WRITE_MEM_FULL) {			// Write remote value
 												remoteBuffer = ((uint32_t)cMessage[port-1][2+shift]<<0) + ((uint32_t)cMessage[port-1][3+shift]<<8) + ((uint32_t)cMessage[port-1][4+shift]<<16) + ((uint32_t)cMessage[port-1][5+shift]<<24);
-												*(float *)temp32 = *(float *)&remoteBuffer;																		
+												*(float *)temp32 = *(float *)&remoteBuffer;
 											}
-											break;												
+											break;
 													
 										default:
 											break;
-									}			
+									}
 									
 									/* Update local format if needed - Todo give local warning later */
 									if ( (BOS_var_reg[cMessage[port-1][shift]-1] & 0x000F) != cMessage[port-1][1+shift] ) {		
 										BOS_var_reg[cMessage[port-1][shift]-1] &= (0xFFF0+cMessage[port-1][1+shift]);
 										responseStatus = BOS_ERR_LOCAL_FORMAT_UPDATED;
-									}								
-								}		
+									}
+								}
 								else
-								{		
+								{
 									responseStatus = BOS_ERR_REMOTE_WRITE_INDEX;		// BOS var index out of range
-								}	
+								}
 							}
 							else												// request for a memory address
 							{
@@ -1328,14 +1328,14 @@ void PxMessagingTask(void * argument)
 							/* Send confirmation back */
 							if (BOS.response == BOS_RESPONSE_ALL || BOS.response == BOS_RESPONSE_MSG) {
 								messageParams[0] = responseStatus;
-								SendMessageToModule(src, CODE_WRITE_REMOTE_RESPONSE, 1);											
+								SendMessageToModule(src, CODE_WRITE_REMOTE_RESPONSE, 1);
 							}
-							break;	
+							break;
 
-							
+
 						case CODE_WRITE_REMOTE_RESPONSE :
 							responseStatus = (BOS_Status) cMessage[port-1][shift];
-							break;	
+							break;
 						
 						case CODE_PORT_FORWARD :
 							writePxMutex(cMessage[port-1][shift], (char *)&cMessage[port-1][shift+1], numOfParams-1, 10, 10);
@@ -1343,7 +1343,7 @@ void PxMessagingTask(void * argument)
 						
 						default :
 							/* First check user-defined messages */
-							result = (BOS_Status) User_MessagingParser(code, port, src, dst, shift);			
+							result = (BOS_Status) User_MessagingParser(code, port, src, dst, shift);
 							/* If not found, then check module messages */
 							if (result == BOS_ERR_UnknownMessage) {
 								result = (BOS_Status) Module_MessagingTask(code, port, src, dst, shift);
@@ -2713,82 +2713,82 @@ BOS_Status GetPortGPIOs(uint8_t port, uint32_t *TX_Port, uint16_t *TX_Pin, uint3
 	/* Get port UART */
 	UART_HandleTypeDef* huart = GetUart(port);
 	
-	if (huart == &huart1) 
-	{	
-#ifdef _Usart1		
+	if (huart == &huart1)
+	{
+#ifdef _Usart1
 		*TX_Port = (uint32_t)USART1_TX_PORT;
 		*TX_Pin = USART1_TX_PIN;
 		*RX_Port = (uint32_t)USART1_RX_PORT;
 		*RX_Pin = USART1_RX_PIN;
 #endif
-	} 
-#ifdef _Usart2	
-	else if (huart == &huart2) 
-	{	
+	}
+#ifdef _Usart2
+	else if (huart == &huart2)
+	{
 		*TX_Port = (uint32_t)USART2_TX_PORT;
 		*TX_Pin = USART2_TX_PIN;
 		*RX_Port = (uint32_t)USART2_RX_PORT;
 		*RX_Pin = USART2_RX_PIN;
-	} 
+	}
 #endif
-#ifdef _Usart3	
-	else if (huart == &huart3) 
-	{	
+#ifdef _Usart3
+	else if (huart == &huart3)
+	{
 		*TX_Port = (uint32_t)USART3_TX_PORT;
 		*TX_Pin = USART3_TX_PIN;
 		*RX_Port = (uint32_t)USART3_RX_PORT;
 		*RX_Pin = USART3_RX_PIN;
-	} 
+	}
 #endif
-#ifdef _Usart4	
-	else if (huart == &huart4) 
-	{	
+#ifdef _Usart4
+	else if (huart == &huart4)
+	{
 		*TX_Port = (uint32_t)USART4_TX_PORT;
 		*TX_Pin = USART4_TX_PIN;
 		*RX_Port = (uint32_t)USART4_RX_PORT;
 		*RX_Pin = USART4_RX_PIN;
-	} 
+	}
 #endif
-#ifdef _Usart5	
-	else if (huart == &huart5) 
-	{	
+#ifdef _Usart5
+	else if (huart == &huart5)
+	{
 		*TX_Port = (uint32_t)USART5_TX_PORT;
 		*TX_Pin = USART5_TX_PIN;
 		*RX_Port = (uint32_t)USART5_RX_PORT;
 		*RX_Pin = USART5_RX_PIN;
-	} 
+	}
 #endif
-#ifdef _Usart6	
-	else if (huart == &huart6) 
-	{	
+#ifdef _Usart6
+	else if (huart == &huart6)
+	{
 		*TX_Port = (uint32_t)USART6_TX_PORT;
 		*TX_Pin = USART6_TX_PIN;
 		*RX_Port = (uint32_t)USART6_RX_PORT;
 		*RX_Pin = USART6_RX_PIN;
-	} 
+	}
 #endif
 #ifdef _Usart7
-	else if (huart == &huart7) 
-	{		
+	else if (huart == &huart7)
+	{
 		*TX_Port = (uint32_t)USART7_TX_PORT;
 		*TX_Pin = USART7_TX_PIN;
 		*RX_Port = (uint32_t)USART7_RX_PORT;
 		*RX_Pin = USART7_RX_PIN;
-	} 
+	}
 #endif
-#ifdef _Usart8	
-	else if (huart == &huart8) 
-	{	
+#ifdef _Usart8
+	else if (huart == &huart8)
+	{
 		*TX_Port = (uint32_t)USART8_TX_PORT;
 		*TX_Pin = USART8_TX_PIN;
 		*RX_Port = (uint32_t)USART8_RX_PORT;
 		*RX_Pin = USART8_RX_PIN;
-	} 
+	}
 #endif
 	else
-		result = BOS_ERROR;	
+		result = BOS_ERROR;
 	
-	return result;	
+	return result;
 }
 
 /*-----------------------------------------------------------*/	
@@ -2796,7 +2796,7 @@ BOS_Status GetPortGPIOs(uint8_t port, uint32_t *TX_Port, uint16_t *TX_Pin, uint3
 /* --- Button press callback. DO NOT MODIFY THIS CALLBACK. 
 		This function is declared as __weak to be overwritten by other implementations in user file.
 */
-__weak void buttonPressedCallback(uint8_t port)
+__weak void buttonPressedCallback(uint8_t port) 
 {	
 }
 
@@ -4846,61 +4846,61 @@ BOS_Status RemovePortButton(uint8_t port)
 	/* 3. Initialize UART at this port */
 	UART_HandleTypeDef* huart = GetUart(port);
 	
-	if (huart->Instance == USART1) 
-	{	
+	if (huart->Instance == USART1)
+	{
 #ifdef _Usart1		
 		MX_USART1_UART_Init();
 #endif
-	} 
-	else if (huart->Instance == USART2) 
-	{	
+	}
+	else if (huart->Instance == USART2)
+	{
 #ifdef _Usart2	
 		MX_USART2_UART_Init();
 #endif
-	} 
-	else if (huart->Instance == USART3) 
-	{	
+	}
+	else if (huart->Instance == USART3)
+	{
 #ifdef _Usart3	
 		MX_USART3_UART_Init();
 #endif
-	} 
-	else if (huart->Instance == USART4) 
-	{	
+	}
+	else if (huart->Instance == USART4)
+	{
 #ifdef _Usart4	
 		MX_USART4_UART_Init();
 #endif
-	} 
-	else if (huart->Instance == USART5) 
-	{	
+	}
+	else if (huart->Instance == USART5)
+	{
 #ifdef _Usart5	
 		MX_USART5_UART_Init();
 #endif
-	} 
-	else if (huart->Instance == USART6) 
-	{	
+	}
+	else if (huart->Instance == USART6)
+	{
 #ifdef _Usart6	
 		MX_USART6_UART_Init();
 #endif
-	} 
-	else if (huart->Instance == USART7) 
-	{	
+	}
+	else if (huart->Instance == USART7)
+	{
 #ifdef _Usart7	
 		MX_USART7_UART_Init();
 #endif
-	} 
-	else if (huart->Instance == USART8) 
-	{	
+	}
+	else if (huart->Instance == USART8)
+	{
 #ifdef _Usart8	
 		MX_USART8_UART_Init();
 #endif
-	} 
+	}
 	else
-		result = BOS_ERROR;			
+		result = BOS_ERROR;
 	
 	/* 4. Start scanning this port */
 	portStatus[port] = FREE;
 	/* Read this port again */
-	HAL_UART_Receive_IT(huart, (uint8_t *)&cRxedChar, 1);	
+	HAL_UART_Receive_IT(huart, (uint8_t *)&cRxedChar, 1);
 	
 	return result;
 }
