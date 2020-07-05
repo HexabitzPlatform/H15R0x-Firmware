@@ -338,7 +338,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32F091xB,H15R0,_module=1</Define>
               <Undefine></Undefine>
-              <IncludePath>..\User;..\BOS;..\H15R0;..\Thirdparty\Middleware\FreeRTOS\Source\CMSIS_RTOS;..\Thirdparty\Middleware\FreeRTOS\Source\include;..\Thirdparty\Middleware\FreeRTOS\Source\portable\RVDS\ARM_CM0;..\Thirdparty\STM32F0xx_HAL_Driver\Inc\Legacy;..\Thirdparty\STM32F0xx_HAL_Driver\Inc;..\Thirdparty\CMSIS\Device\ST\STM32F0xx\Include;..\Thirdparty\CMSIS\Include;..\User</IncludePath>
+              <IncludePath>..\User;..\BOS;..\H15R0;..\Thirdparty\Middleware\FreeRTOS\Source\CMSIS_RTOS;..\Thirdparty\Middleware\FreeRTOS\Source\include;..\Thirdparty\Middleware\FreeRTOS\Source\portable\RVDS\ARM_CM0;..\Thirdparty\STM32F0xx_HAL_Driver\Inc\Legacy;..\Thirdparty\STM32F0xx_HAL_Driver\Inc;..\Thirdparty\CMSIS\Device\ST\STM32F0xx\Include;..\Thirdparty\CMSIS\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
