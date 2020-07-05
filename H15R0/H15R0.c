@@ -28,11 +28,11 @@ UART_HandleTypeDef huart5;
 /* Module exported parameters ------------------------------------------------*/
 module_param_t modParam[NUM_MODULE_PARAMS] = {{.paramPtr=NULL, .paramFormat=FMT_FLOAT, .paramName=""}};
 
-/* Private variables ---------------------------------------------------------*/
-float Vref = 3.3;                          // Vref of op-am
-float MaxVoltage = 8.6;                    // maximum out of op-am
-float MinVoltage = -10;                   // minimum out of op-am
-float MaxDACout = 3.1;
+/* Private variables ---------------------------------------------------------*/ 
+float Vref = 3.3;                          // Vref of op-am float MaxVoltage = 8.6;                    
+float MaxVoltage = -10;                                           // maximum out of op-am
+float MinVoltage = -10;                    // minimum out of op-am
+float  MaxDACout = 3.1;
 float DACOut;
 int DAC_MaxDigitalValue = 256;         //For right-aligned 8-bit resolution: DAC_MaxDigitalValue = 0xFF
 uint8_t ByteVal;
@@ -184,19 +184,19 @@ Module_Status AnalogPercentage(float outputVoltage)
 */
 Module_Status AnalogOutValue(float outputVoltage)
 {
-	if ( outputVoltage > -10 && outputVoltage < 10 )
-	{
+//	if ( outputVoltage > -10 && outputVoltage < 10 )
+//	{
 	DACOut = ( outputVoltage - MinVoltage) * MaxDACout / ( MaxVoltage - MinVoltage);
 	ByteVal = (DACOut * DAC_MaxDigitalValue)/Vref;
   HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
  	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
 	
-		return H15R0_OK;
-	}
-	else
-	{
-		return H15R0_ERR_WrongParams;
-	}
+//		return H15R0_OK;
+//	}
+//	else
+//	{
+//		return H15R0_ERR_WrongParams;
+//	}
 }
 /*-----------------------------------------------------------*/
 

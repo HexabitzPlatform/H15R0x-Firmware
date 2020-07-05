@@ -236,20 +236,20 @@ void BackEndTask(void * argument)
 
 				for (int i=UARTRxBufIndex[port-1]; i<MSG_RX_BUF_SIZE ; i++)
 				{
-					if (i < (MSG_RX_BUF_SIZE-1) && UARTRxBuf[port-1][i] == 'H' && UARTRxBuf[port-1][i+1] == 'Z')	
-					{	
-						packetStart = i;	
+					if (i < (MSG_RX_BUF_SIZE-1) && UARTRxBuf[port-1][i] == 'H' && UARTRxBuf[port-1][i+1] == 'Z')
+					{
+						packetStart = i;
 						break;
-					}	
+					}
 					else if (i == (MSG_RX_BUF_SIZE-1) && UARTRxBuf[port-1][MSG_RX_BUF_SIZE-1] == 'H' && UARTRxBuf[port-1][0] == 'Z')	// HZ wrap around
-					{	
-						packetStart = MSG_RX_BUF_SIZE-1;	
+					{
+						packetStart = MSG_RX_BUF_SIZE-1;
 						break;
-					}							
-					else 
+					}
+					else
 					{
 						/* B. Did not find any messaging packets. Check for CLI enter key (0xD) */
-						if (i == MSG_RX_BUF_SIZE-1)		
+						if (i == MSG_RX_BUF_SIZE-1)
 						{
 							if (BOS.disableCLI == false)
 							{
@@ -259,11 +259,11 @@ void BackEndTask(void * argument)
 									{
 										UARTRxBuf[port-1][j] = 0;
 										UARTRxBufIndex[port-1] = j+1;		// Advance buffer index
-										portStatus[PcPort] = FREE;			// Free the previous CLI port 
+										portStatus[PcPort] = FREE;			// Free the previous CLI port
 										portStatus[port] = CLI;					// Continue the CLI session on this port
 										PcPort = port;
 										/* Activate the CLI task */
-										xTaskNotifyGive(xCommandConsoleTaskHandle);		
+										xTaskNotifyGive(xCommandConsoleTaskHandle);
 										break;
 									}
 								}
@@ -275,7 +275,7 @@ void BackEndTask(void * argument)
 				}
 						
 				/* Check parse status */
-				if (emptyBuffer) {	
+				if (emptyBuffer) {
 					emptyBuffer = false;
 					continue;
 				}
