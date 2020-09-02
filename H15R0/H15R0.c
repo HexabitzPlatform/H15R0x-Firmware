@@ -1,5 +1,5 @@
 /*
-    BitzOS (BOS) V0.2.1 - Copyright (C) 2017-2020 Hexabitz
+    BitzOS (BOS) V0.2.3 - Copyright (C) 2017-2020 Hexabitz
     All rights reserved
 
     File Name     : H15R0.c
@@ -34,7 +34,7 @@ float MaxVoltage = 8.6;                    // maximum out of op-am
 float MinVoltage = -10;                   // minimum out of op-am
 float MaxDACout = 3.1;
 float DACOut;
-int DAC_MaxDigitalValue = 256;         //For right-aligned 8-bit resolution: DAC_MaxDigitalValue = 0xFF
+int DAC_MaxDigitalValue = 255;         //For right-aligned 8-bit resolution: DAC_MaxDigitalValue = 0xFF
 uint8_t ByteVal;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -140,18 +140,6 @@ Module_Status Module_MessagingTask(uint16_t code, uint8_t port, uint8_t src, uin
 }
 /*-----------------------------------------------------------*/
 
-/* RGBledTask function */
-void RGBledTask(void * argument)
-{
-
-  /* Infinite loop */
-  for(;;)
-  {
-	
-	}	
-
-}
-/*-----------------------------------------------------------*/
 
 /* -----------------------------------------------------------------------
 	|																APIs	 																 	|
@@ -165,7 +153,7 @@ Module_Status AnalogPercentage(float outputVoltage)
 	if ( outputVoltage > 0 && outputVoltage < 100 )
 	{
 	DACOut = outputVoltage * MaxDACout / 100;
-	ByteVal = (DACOut * DAC_MaxDigitalValue)/Vref;
+	ByteVal = (DACOut * (DAC_MaxDigitalValue+1))/Vref;
 	
   HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
  	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
@@ -187,7 +175,7 @@ Module_Status AnalogOutValue(float outputVoltage)
 	if ( outputVoltage > -10 && outputVoltage < 10 )
 	{
 	DACOut = ( outputVoltage - MinVoltage) * MaxDACout / ( MaxVoltage - MinVoltage);
-	ByteVal = (DACOut * DAC_MaxDigitalValue)/Vref;
+	ByteVal = (DACOut * (DAC_MaxDigitalValue+1))/Vref;
   HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
  	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
 	
