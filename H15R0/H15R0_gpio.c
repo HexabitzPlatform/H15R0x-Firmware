@@ -55,7 +55,7 @@ void GPIO_Init(void)
 	__GPIOB_CLK_ENABLE();
 	__GPIOF_CLK_ENABLE();		// for HSE and Boot0
 	
-	IND_LED_Init();
+		IND_LED_Init();
 }
 
 

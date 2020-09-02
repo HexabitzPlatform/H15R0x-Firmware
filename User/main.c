@@ -83,8 +83,6 @@ int main(void)
 /* User Task */
 void UserTask(void * argument)
 {
-	AddPortButton(MOMENTARY_NO , P1);
-	SetButtonEvents(P1 , 1 ,0 ,0 ,0 ,0 ,0 ,0 ,0 ,0);
 
   /* Infinite loop */
   for(;;)
@@ -92,11 +90,6 @@ void UserTask(void * argument)
 
 	 
 	}
-}
-void buttonClickedCallback(uint8_t port)
-{
-	  messageParams[0]=1;
-		SendMessageToModule(2 , CODE_H15R0_AnalogOutValue, 1);
 }
 /*-----------------------------------------------------------*/
 
