@@ -30,9 +30,9 @@ module_param_t modParam[NUM_MODULE_PARAMS] = {{.paramPtr=NULL, .paramFormat=FMT_
 
 /* Private variables ---------------------------------------------------------*/
 float Vref = 3.3;                          // Vref of op-am
-float MaxVoltage = 8.6;                    // maximum out of op-am
-float MinVoltage = -10;                   // minimum out of op-am
-float MaxDACout = 3.1;
+float MaxVoltage = 9.3;                    // maximum out of op-am
+float MinVoltage = -9.6;                   // minimum out of op-am
+float MaxDACout = 3.2;
 float DACOut;
 int DAC_MaxDigitalValue = 255;         //For right-aligned 8-bit resolution: DAC_MaxDigitalValue = 0xFF
 uint8_t ByteVal;
@@ -150,7 +150,7 @@ Module_Status Module_MessagingTask(uint16_t code, uint8_t port, uint8_t src, uin
 */
 Module_Status AnalogPercentage(float outputVoltage)
 {
-	if ( outputVoltage > 0 && outputVoltage < 100 )
+	if ( outputVoltage >= 0 && outputVoltage <= 100 )
 	{
 	DACOut = outputVoltage * MaxDACout / 100;
 	ByteVal = (DACOut * (DAC_MaxDigitalValue+1))/Vref;
