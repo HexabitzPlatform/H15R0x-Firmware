@@ -154,7 +154,6 @@ Module_Status AnalogPercentage(float outputVoltage)
 	{
 	DACOut = outputVoltage * MaxDACout / 100;
 	ByteVal = (DACOut * (DAC_MaxDigitalValue+1))/Vref;
-	
   HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
  	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
 		
@@ -174,6 +173,7 @@ Module_Status AnalogOutValue(float outputVoltage)
 {
 	if ( outputVoltage > -10 && outputVoltage < 10 )
 	{
+		
 	DACOut = ( outputVoltage - MinVoltage) * MaxDACout / ( MaxVoltage - MinVoltage);
 	ByteVal = (DACOut * (DAC_MaxDigitalValue+1))/Vref;
   HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
