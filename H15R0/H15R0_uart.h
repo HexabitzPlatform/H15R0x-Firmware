@@ -33,9 +33,15 @@
   */
 	
 /*
-		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.3 - Copyright (C) 2017-2020 Hexabitz
+		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.4 - Copyright (C) 2017-2021 Hexabitz
     All rights reserved
 */
+
+#ifndef __N
+	extern uint16_t arrayPortsDir[MaxNumOfModules];									/* Array ports directions */
+#else
+	extern uint16_t arrayPortsDir[__N];
+#endif 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
 #ifndef __usart_H

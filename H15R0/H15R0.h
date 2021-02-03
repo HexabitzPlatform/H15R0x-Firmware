@@ -1,5 +1,5 @@
 /*
-    BitzOS (BOS) V0.2.3 - Copyright (C) 2017-2020 Hexabitz
+    BitzOS (BOS) V0.2.4 - Copyright (C) 2017-2021 Hexabitz
     All rights reserved
 		
     File Name     : H15R0.c
@@ -25,9 +25,7 @@
 #endif
 
 /* Port-related definitions */
-#ifdef H15R0
-	#define	NumOfPorts		4
-#endif
+#define	NumOfPorts		4
 
 #define P_PROG 				P2					/* ST factory bootloader UART */
 
@@ -133,6 +131,7 @@ extern void MX_USART5_UART_Init(void);
 */
 extern Module_Status AnalogPercentage(float outputVoltage);
 extern Module_Status AnalogOutValue(float outputVoltage);
+extern void SystemClock_Config(void);
 
 
 /* -----------------------------------------------------------------------
