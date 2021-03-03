@@ -1,0 +1,11 @@
+H15R0.c:91:6:SystemClock_Config	128	static
+H15R0.c:139:9:SaveToRO	72	static
+H15R0.c:235:9:ClearROtopology	8	static
+H15R0.c:246:6:Module_Init	8	static
+H15R0.c:263:6:RegisterModuleCLICommands	8	static
+H15R0.c:272:9:GetPort	0	static
+H15R0.c:321:15:AnalogPercentage	16	static
+H15R0.c:365:15:percentagevalueCommand	24	static,ignoring_inline_asm
+H15R0.c:342:15:AnalogOutValue	16	static
+H15R0.c:290:15:Module_MessagingTask	8	static
+H15R0.c:402:15:AnalogvalueCommand	24	static,ignoring_inline_asm
