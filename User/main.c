@@ -40,8 +40,13 @@
 #include "BOS.h"
 
 /* Private variables ---------------------------------------------------------*/
+volatile float weight;
 
+//float DACOut11;
+float hi;
+ 
 /* Private function prototypes -----------------------------------------------*/
+
 
 /* Main functions ------------------------------------------------------------*/
 

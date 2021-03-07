@@ -32,8 +32,8 @@ extern uint8_t numOfRecordedSnippets;
 /* Module exported parameters ------------------------------------------------*/
 module_param_t modParam[NUM_MODULE_PARAMS] = {{.paramPtr=NULL, .paramFormat=FMT_FLOAT, .paramName=""}};
 
-/* Private variables ---------------------------------------------------------*/
-float Vref = 3.3;                          // Vref of op-am
+/* Private variables ---------------------------------------------------------*/ 
+float Vref = 3.3;                          // Vref of op-am float MaxVoltage = 8.6;                    
 float MaxVoltage = 9.3;                    // maximum out of op-am
 float MinVoltage = -9.6;                   // minimum out of op-am
 float MaxDACout = 3.2;
@@ -341,20 +341,20 @@ Module_Status AnalogPercentage(float outputVoltage)
 */
 Module_Status AnalogOutValue(float outputVoltage)
 {
-	if ( outputVoltage > -10 && outputVoltage < 10 )
-	{
+//	if ( outputVoltage > -10 && outputVoltage < 10 )
+//	{
 		
 	DACOut = ( outputVoltage - MinVoltage) * MaxDACout / ( MaxVoltage - MinVoltage);
 	ByteVal = (DACOut * (DAC_MaxDigitalValue+1))/Vref;
   HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
  	HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal);
 	
-		return H15R0_OK;
-	}
-	else
-	{
-		return H15R0_ERR_WrongParams;
-	}
+//		return H15R0_OK;
+//	}
+//	else
+//	{
+//		return H15R0_ERR_WrongParams;
+//	}
 }
 /*-----------------------------------------------------------*/
 
