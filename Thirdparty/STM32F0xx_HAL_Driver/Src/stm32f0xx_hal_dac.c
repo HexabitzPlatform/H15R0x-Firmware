@@ -549,7 +549,7 @@ HAL_StatusTypeDef HAL_DAC_SetValue(DAC_HandleTypeDef* hdac, uint32_t Channel, ui
   assert_param(IS_DAC_ALIGN(Alignment));
   assert_param(IS_DAC_DATA(Data));
   
-  tmp = (uint32_t)hdac->Instance;
+  tmp = (uint32_t)hdac->Instance; 
   if(Channel == DAC_CHANNEL_1)
   {
     tmp += DAC_DHR12R1_ALIGNMENT(Alignment);

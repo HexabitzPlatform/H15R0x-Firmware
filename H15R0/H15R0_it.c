@@ -32,7 +32,7 @@
   */
 	
 /*
-		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.1 - Copyright (C) 2017-2020 Hexabitz
+		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.4 - Copyright (C) 2017-2021 Hexabitz
     All rights reserved
 */
 
@@ -42,7 +42,6 @@
 
 /* External variables --------------------------------------------------------*/
 extern uint8_t UARTRxBuf[NumOfPorts][MSG_RX_BUF_SIZE];
-//extern uint8_t UARTTxBuf[3][MSG_TX_BUF_SIZE];
 extern uint8_t UARTRxBufIndex[NumOfPorts];
 
 /* External function prototypes ----------------------------------------------*/
@@ -247,14 +246,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		MsgDMAStopped[GetPort(huart)-1] = true;	
 	}
 }
-
-/*-----------------------------------------------------------*/
-/* This function handles TIM3 global interrupt.
-*/
-//void TIM3_IRQHandler(void)
-//{	
-//		HAL_TIM_IRQHandler(&htim3);
-//}
 
 /*-----------------------------------------------------------*/
 

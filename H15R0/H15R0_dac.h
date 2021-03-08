@@ -33,7 +33,7 @@
   */
 	
 /*
-		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.0 - Copyright (C) 2017-2019 Hexabitz
+		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.4 - Copyright (C) 2017-2021 Hexabitz
     All rights reserved
 */
 
@@ -47,15 +47,9 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 
-
-
-extern DAC_HandleTypeDef hdac;
-//extern TIM_HandleTypeDef htim2;
-	 
+extern DAC_HandleTypeDef hdac;	 
 extern void MX_DAC_Init(void);
 	 
-
-
 #ifdef __cplusplus
 }
 #endif

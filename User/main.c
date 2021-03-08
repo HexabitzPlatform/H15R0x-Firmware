@@ -32,19 +32,15 @@
   */
 
 /*
-		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.1 - Copyright (C) 2017-2020 Hexabitz
+		MODIFIED by Hexabitz for BitzOS (BOS) V0.2.4 - Copyright (C) 2017-2021 Hexabitz
     All rights reserved
 */
 
 /* Includes ------------------------------------------------------------------*/
 #include "BOS.h"
 
-
 /* Private variables ---------------------------------------------------------*/
-volatile float weight;
 
-//float DACOut11;
-float hi;
  
 /* Private function prototypes -----------------------------------------------*/
 
@@ -53,6 +49,8 @@ float hi;
 
 int main(void)
 {
+
+
   /* MCU Configuration----------------------------------------------------------*/
 
   /* Reset all peripherals, Initializes the Flash interface and the Systick. */
@@ -63,8 +61,8 @@ int main(void)
 
   /* Initialize all user peripherals */
 
-	/* Initialize BitzOS */
-	BOS_Init();
+  /* Initialize BitzOS */
+  BOS_Init();
 
   /* Call init function for freertos objects (in freertos.c) */
   MX_FREERTOS_Init();
@@ -86,26 +84,11 @@ int main(void)
 /* User Task */
 void UserTask(void * argument)
 {
-AddBOSvar(FMT_FLOAT, (uint32_t) weight);
-
+	
   /* Infinite loop */
   for(;;)
   {
-		hi = AnalogOutValue(4.2);
-//		if( weight > 0.2 && weight < 9.0)
-//			{
-//				//  Weight is changing between 0.0  to 9.0 kg
-//				DACOut1 = (weight / 9) * 3.1;
-//				ByteVal1 = (DACOut1 * 256)/3.3;
-//				HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
-//				HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal1);
-////				weight = 0;
-//			}
-//			else
-//			{ ByteVal1 = 0;
-//				HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
-//				HAL_DAC_SetValue(&hdac, DAC1_CHANNEL_1, DAC_ALIGN_8B_R, ByteVal1);
-//			}
+
 	}
 }
 /*-----------------------------------------------------------*/

@@ -1,5 +1,5 @@
 /*
-    BitzOS (BOS) V0.2.1 - Copyright (C) 2017-2020 Hexabitz
+    BitzOS (BOS) V0.2.4 - Copyright (C) 2017-2021 Hexabitz
     All rights reserved
 		
     File Name     : H15R0_dma.c
@@ -28,7 +28,6 @@ DMA_HandleTypeDef frontendDMA[3] = {0};
 CRC_HandleTypeDef hcrc;
 
 extern uint8_t UARTRxBuf[NumOfPorts][MSG_RX_BUF_SIZE];
-//extern uint8_t UARTTxBuf[3][MSG_TX_BUF_SIZE];
 
 /* Private function prototypes -----------------------------------------------*/
 void SetupDMAInterrupts(DMA_HandleTypeDef *hDMA, uint8_t priority);
@@ -65,12 +64,6 @@ void DMA_Init(void)
 	DMA_MSG_TX_CH_Init(&msgTxDMA[0], DMA1_Channel2);
 	DMA_MSG_TX_CH_Init(&msgTxDMA[1], DMA1_Channel4);
 	DMA_MSG_TX_CH_Init(&msgTxDMA[2], DMA1_Channel7);	
-	
-	/* Initialize streaming RX DMAs x 0 */
-	// No more channels. Dynamically reconfigure from messaging RX DMAs.
-	
-	/* Initialize frontend DMAs x 3 - Update for each module */
-	//DMA_FRONTEND_CH_Init(&frontendDMA[0], DMA2_Channel5);
 	
 }
 
@@ -564,7 +557,7 @@ void RemapAndLinkDMAtoUARTTx(UART_HandleTypeDef *huart, DMA_HandleTypeDef *hDMA)
 void CRC_Init(void)
 {
   hcrc.Instance = CRC;
-	hcrc.Init.CRCLength = CRC_POLYLENGTH_8B;		// Do not change this since it is used for message CRC8
+	hcrc.Init.CRCLength = CRC_POLYLENGTH_8B;													// Do not change this since it is used for message CRC8
 	hcrc.Init.DefaultInitValueUse = DEFAULT_INIT_VALUE_ENABLE;    
   hcrc.Init.DefaultPolynomialUse = DEFAULT_POLYNOMIAL_ENABLE;
 	hcrc.Init.InputDataInversionMode = CRC_INPUTDATA_INVERSION_NONE;    
@@ -585,6 +578,23 @@ void HAL_CRC_MspDeInit(CRC_HandleTypeDef* hcrc)
 	__HAL_RCC_CRC_CLK_DISABLE();
 }
 
+uint8_t  CalculateCRC8(uint32_t pBuffer[], uint16_t size)
+{
+	uint8_t pTemp;
+	//uint32_t crcBuffer[size]=*pData;
+	/* check if the passed variables are null */
+	if (NULL!=pBuffer && 0!=size)
+	{
+		pTemp=HAL_CRC_Calculate(&hcrc, pBuffer, size/4);
+		if ((size%4)!=0)
+		{
+			pTemp=HAL_CRC_Accumulate(&hcrc, &pBuffer[(size/4)*4], 1);
+		}
+		return pTemp;
+	}
+	else
+	return 0;
+}
 /*-----------------------------------------------------------*/
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
