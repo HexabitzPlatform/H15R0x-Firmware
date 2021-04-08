@@ -1,5 +1,5 @@
 H15R0.c:91:6:SystemClock_Config	128	static
-H15R0.c:139:9:SaveToRO	72	static
+H15R0.c:139:9:SaveToRO	48	static
 H15R0.c:235:9:ClearROtopology	8	static
 H15R0.c:246:6:Module_Init	8	static
 H15R0.c:263:6:RegisterModuleCLICommands	8	static

@@ -84,11 +84,9 @@ int main(void)
 /* User Task */
 void UserTask(void * argument)
 {
-	
-  /* Infinite loop */
+	/* Infinite loop */
   for(;;)
   {
-
 	}
 }
 /*-----------------------------------------------------------*/
