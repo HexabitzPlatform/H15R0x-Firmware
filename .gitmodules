@@ -1,1 +1,8 @@
-
+[submodule "BOS"]
+	path = BOS
+url=https://github.com/hexabitzplatform/BOS
+	branch = Develop
+[submodule "Thirdparty"]
+	path = Thirdparty
+url=https://github.com/hexabitzplatform/Thirdparty
+	branch = Develop
