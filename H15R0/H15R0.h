@@ -1,10 +1,10 @@
 /*
-    BitzOS (BOS) V0.2.4 - Copyright (C) 2017-2021 Hexabitz
+    BitzOS (BOS) V0.2.5 - Copyright (C) 2017-2021 Hexabitz
     All rights reserved
 		
     File Name     : H15R0.c
     Description   : Header file for module H15R0.
-										Bipolar 10V Analog Output Module.
+					Bipolar 10V Analog Output Module.
 */
 	
 /* Define to prevent recursive inclusion -------------------------------------*/

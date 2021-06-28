@@ -1,4 +1,0 @@
-H15R0_gpio.c:65:6:IND_LED_Init	32	static
-H15R0_gpio.c:51:6:GPIO_Init	32	static
-H15R0_gpio.c:133:12:GetPortGPIOs	16	static
-H15R0_gpio.c:79:9:IsFactoryReset	88	static
