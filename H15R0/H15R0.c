@@ -40,7 +40,7 @@ float MaxDACout =3.2;
 float DACOut;
 int DAC_MaxDigitalValue =255;//For right-aligned 8-bit resolution: DAC_MaxDigitalValue = 0xFF
 uint8_t ByteVal;
-
+float percent __attribute__((section(".mySection")));
 /* Private function prototypes -----------------------------------------------*/
 void RegisterModuleCLICommands(void);
 
@@ -245,6 +245,11 @@ void Module_Peripheral_Init(void){
 	/* DAC output */
 	MX_DAC_Init();
 }
+
+void initialValue(void)
+{
+	percent=0;
+}
 /*-----------------------------------------------------------*/
 
 /* --- Register this module CLI Commands
@@ -254,9 +259,7 @@ void RegisterModuleCLICommands(void){
 	FreeRTOS_CLIRegisterCommand(&AnalogvalueCommandDefinition);
 }
 
-void ExecuteMonitor(void){
 
-}
 /*-----------------------------------------------------------*/
 
 /* --- Get the port for a given UART.
@@ -308,7 +311,7 @@ Module_Status AnalogPercentage(float outputVoltage){
 		ByteVal = (DACOut * (DAC_MaxDigitalValue + 1)) / Vref;
 		HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
 		HAL_DAC_SetValue(&hdac,DAC1_CHANNEL_1,DAC_ALIGN_8B_R,ByteVal);
-		
+		percent = (outputVoltage/5)-10;
 		return H15R0_OK;
 	}
 	else {
@@ -327,7 +330,7 @@ Module_Status AnalogOutValue(float outputVoltage){
 		ByteVal = (DACOut * (DAC_MaxDigitalValue + 1)) / Vref;
 		HAL_DAC_Start(&hdac,DAC1_CHANNEL_1);
 		HAL_DAC_SetValue(&hdac,DAC1_CHANNEL_1,DAC_ALIGN_8B_R,ByteVal);
-		
+		percent = outputVoltage;
 		return H15R0_OK;
 	}
 	else {

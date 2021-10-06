@@ -1,4 +1,7 @@
 /*
+ BitzOS (BOS) V0.2.5 - Copyright (C) 2017-2021 Hexabitz
+ All rights reserved
+
  File Name          : H15R0_dac.c
  Description        : This file provides code for the configuration
                       of the DAC instances.
