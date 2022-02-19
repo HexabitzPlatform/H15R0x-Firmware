@@ -1,5 +1,5 @@
 /*
-    BitzOS (BOS) V0.2.5 - Copyright (C) 2017-2021 Hexabitz
+    BitzOS (BOS) V0.2.6 - Copyright (C) 2017-2022 Hexabitz
     All rights reserved
 		
     File Name     : H15R0.c
@@ -18,6 +18,8 @@
 #include "H15R0_gpio.h"	
 #include "H15R0_dma.h"
 #include "H15R0_dac.h"
+#include "H15R0_inputs.h"
+#include "H15R0_eeprom.h"
 /* Exported definitions -------------------------------------------------------*/
 
 #ifdef H15R0
@@ -132,7 +134,8 @@ extern void MX_USART5_UART_Init(void);
 extern Module_Status AnalogPercentage(float outputVoltage);
 extern Module_Status AnalogOutValue(float outputVoltage);
 extern void SystemClock_Config(void);
-
+void SetupPortForRemoteBootloaderUpdate(uint8_t port);
+void remoteBootloaderUpdate(uint8_t src,uint8_t dst,uint8_t inport,uint8_t outport);
 
 /* -----------------------------------------------------------------------
 	|															Commands																 	|
